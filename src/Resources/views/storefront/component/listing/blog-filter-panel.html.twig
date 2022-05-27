@@ -10,7 +10,7 @@
 
                     {% sw_include '@Storefront/storefront/component/listing/filter/filter-multi-select.html.twig' with {
                         elements: blogCategoriesSorted,
-                        sidebar: sidebar,
+                        sidebar: true,
                         name: 'categories',
                         displayName: 'sas-blog.listing.filterBlogCategoriesDisplayName'|trans|sw_sanitize
                     } %}
@@ -26,7 +26,7 @@
 
                     {% sw_include '@Storefront/storefront/component/listing/filter/filter-multi-select.html.twig' with {
                         elements: authorsSorted,
-                        sidebar: sidebar,
+                        sidebar: true,
                         name: 'authors',
                         displayName: 'sas-blog.listing.filterBlogAuthorDisplayName'|trans|sw_sanitize
                     } %}

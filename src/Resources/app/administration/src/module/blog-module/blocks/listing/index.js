@@ -5,7 +5,7 @@ Shopware.Service('cmsService').registerCmsBlock({
     name: 'blog-listing',
     label: 'sas-blog.blocks.blog.listing.label',
     category: 'sas-blog',
-    component: 'sas-cms-block-blog',
+    component: 'sas-cms-block-blog-listing',
     previewComponent: 'sas-cms-preview-blog-listing',
     defaultConfig: {
         marginBottom: '0px',

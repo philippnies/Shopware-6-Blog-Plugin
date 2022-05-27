@@ -32,6 +32,8 @@ import enGB from './snippet/en-GB.json';
 import './blocks/listing';
 import './blocks/detail';
 import './blocks/single-entry';
+import './blocks/sidebar-category';
+import './blocks/sidebar-filter';
 
 /**
  * CMS Elements
@@ -39,6 +41,8 @@ import './blocks/single-entry';
 import './elements/blog-detail';
 import './elements/blog';
 import './elements/blog-single-select';
+import './elements/blog-sidebar-category';
+import './elements/blog-sidebar-filter';
 
 /**
  * Blog Category
