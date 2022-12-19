@@ -12,6 +12,7 @@ use Shopware\Core\Content\Sitemap\Struct\UrlResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
@@ -60,6 +61,7 @@ class BlogUrlProvider extends AbstractUrlProvider
 
         $criteria->addFilter(
             new EqualsFilter('active', true),
+            new ContainsFilter('customFields.sales_channels_id', $context->getSalesChannelId()),
             new RangeFilter('publishedAt', [RangeFilter::LTE => $dateTime->format(\DATE_ATOM)])
         );
 

@@ -197,6 +197,7 @@ Component.register('sas-blog-detail', {
                 this.salesChannels.map(function (value) {
                     salesChannelsIdArray.push(value.id);
                 });
+
                 this.blog.customFields = {'sales_channels_id': salesChannelsIdArray};
             }
 

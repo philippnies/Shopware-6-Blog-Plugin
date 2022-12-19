@@ -9,6 +9,7 @@ use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
 class BlogDetailCmsElementResolver extends AbstractCmsElementResolver
@@ -27,6 +28,7 @@ class BlogDetailCmsElementResolver extends AbstractCmsElementResolver
 
         $criteria->addFilter(
             new EqualsFilter('active', true),
+            new ContainsFilter('customFields.sales_channels_id', $resolverContext->getSalesChannelContext()->getSalesChannelId()),
             new EqualsFilter('id', $resolverContext->getRequest()->get('articleId'))
         );
         $criteria->addAssociations(['blogAuthor', 'blogCategories']);
