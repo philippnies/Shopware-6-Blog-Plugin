@@ -34,6 +34,10 @@
             <tag name="shopware.entity.definition"/>
         </service>
 
+        <service id="Sas\BlogModule\Content\SalesChannel\BlogEntriesSalesChannelDefinition">
+            <tag name="shopware.entity.definition" entity="blog_entities_sales_channel" />
+        </service>
+
         <service id="Sas\BlogModule\Content\Extension\MediaExtension">
             <tag name="shopware.entity.extension"/>
         </service>

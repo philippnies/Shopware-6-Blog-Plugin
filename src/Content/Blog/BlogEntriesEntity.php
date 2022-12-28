@@ -5,6 +5,7 @@ namespace Sas\BlogModule\Content\Blog;
 use Sas\BlogModule\Content\Blog\BlogEntriesTranslation\BlogEntriesTranslationCollection;
 use Sas\BlogModule\Content\BlogAuthor\BlogAuthorEntity;
 use Sas\BlogModule\Content\BlogCategory\BlogCategoryCollection;
+use Sas\BlogModule\Content\SalesChannel\BlogEntriesSalesChannelCollection;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
@@ -64,6 +65,11 @@ class BlogEntriesEntity extends Entity
      * @var BlogCategoryCollection|null
      */
     protected $blogCategories;
+
+    /**
+     * @var BlogEntriesSalesChannelCollection|null
+     */
+    protected $blogEntriesSalesChannel;
 
     /**
      * @var string
@@ -208,6 +214,16 @@ class BlogEntriesEntity extends Entity
     public function setBlogCategories(BlogCategoryCollection $blogCategories): void
     {
         $this->blogCategories = $blogCategories;
+    }
+
+    public function getBlogEntriesSalesChannel(): ?BlogEntriesSalesChannelCollection
+    {
+        return $this->blogEntriesSalesChannel;
+    }
+
+    public function setBlogEntriesSalesChannel(BlogEntriesSalesChannelCollection $blogEntriesSalesChannel): void
+    {
+        $this->blogEntriesSalesChannel = $blogEntriesSalesChannel;
     }
 
     public function getPublishedAt(): \DateTimeInterface

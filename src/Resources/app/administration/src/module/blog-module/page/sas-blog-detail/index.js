@@ -164,6 +164,7 @@ Component.register('sas-blog-detail', {
 
             const criteria = new Criteria();
             criteria.addAssociation('blogCategories');
+            criteria.addAssociation('blogEntriesSalesChannel');
 
             return this.blogRepository
                 .get(this.blogId, Shopware.Context.api, criteria)
