@@ -3,6 +3,9 @@
 * Fixed BlogSubscriber um nach Autoren & Kategorien um Listing zu suchen
 * Problem behoben, dass den Autor & Kategorie nicht im Blog Beitrag anzeigt.
 
+# 1.5.12
+* Slug ist Editierbar [#134](https://github.com/ChristopherDosin/Shopware-6-Blog-Plugin/pull/134)
+
 # 1.5.11
 * Ein Bug innerhalb der SEO Templates wurde gefixed.
 

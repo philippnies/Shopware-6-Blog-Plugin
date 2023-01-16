@@ -48,6 +48,7 @@ Component.register('sas-blog-detail', {
             isProVersion: false,
             slugBlog: null,
             localeLanguage: null,
+            slugFirstLoad: false,
         };
     },
 
@@ -60,16 +61,20 @@ Component.register('sas-blog-detail', {
             return this.blog.active ? 1 : 0;
         },
         'blog.title': function (value) {
-            if (typeof value !== 'undefined') {
+            if (typeof value === 'undefined') return;
 
-                this.getLocaleLanguage();
+            this.getLocaleLanguage();
 
-                if (this.localeLanguage !== null) {
-                    this.slugMaker(value);
-                } else {
-                    this.blog.slug = value;
-                }
+            if ((this.localeLanguage !== null) && this.slugFirstLoad) {
+                this.slugMaker(value);
             }
+
+            if ((this.localeLanguage === null) && this.slugFirstLoad)  {
+                this.blog.slug = value;
+            }
+
+            this.slugFirstLoad = true
+
         },
         blogId() {
             this.createdComponent();
@@ -297,6 +302,19 @@ Component.register('sas-blog-detail', {
                     this.slugCreatePage(result, slugify(value, { locale: this.localeLanguage, lower: true }));
                 });
             }
+        },
+
+        editableSlug(value) {
+            if (typeof value === 'undefined') return
+
+            this.getLocaleLanguage();
+
+            if (this.localeLanguage !== null) {
+                this.slugMaker(value);
+            } else {
+                this.blog.slug = value;
+            }
+
         },
 
         async getSalesChannels() {
