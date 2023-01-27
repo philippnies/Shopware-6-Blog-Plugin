@@ -13,7 +13,7 @@ class BlogCategoryTranslationEntity extends TranslationEntity
 
     protected string $sasBlogCategoryId;
 
-    protected ?BlogCategoryEntity $sasBlogCategory;
+    protected ?BlogCategoryEntity $sasBlogCategory = null;
 
     public function getName(): ?string
     {

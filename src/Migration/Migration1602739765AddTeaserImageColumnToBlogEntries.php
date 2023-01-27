@@ -9,7 +9,7 @@ class Migration1602739765AddTeaserImageColumnToBlogEntries extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1602739765;
+        return 1_602_739_765;
     }
 
     public function update(Connection $connection): void

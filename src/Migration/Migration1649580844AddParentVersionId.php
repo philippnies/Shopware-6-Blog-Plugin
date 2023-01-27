@@ -10,7 +10,7 @@ class Migration1649580844AddParentVersionId extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1649580844;
+        return 1_649_580_844;
     }
 
     public function update(Connection $connection): void

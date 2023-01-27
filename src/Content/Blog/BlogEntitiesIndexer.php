@@ -2,9 +2,9 @@
 
 namespace Sas\BlogModule\Content\Blog;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Sas\BlogModule\Content\Blog\Events\BlogIndexerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexer;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexingMessage;
@@ -12,20 +12,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BlogEntitiesIndexer extends EntityIndexer
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    private IteratorFactory $iteratorFactory;
-
-    private EntityRepositoryInterface $repository;
-
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        IteratorFactory $iteratorFactory,
-        EntityRepositoryInterface $repository
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->iteratorFactory = $iteratorFactory;
-        $this->repository = $repository;
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly IteratorFactory $iteratorFactory, private readonly EntityRepository $repository)
+    {
     }
 
     public function getName(): string
@@ -55,7 +43,7 @@ class BlogEntitiesIndexer extends EntityIndexer
         $this->eventDispatcher->dispatch(new BlogIndexerEvent($ids, $message->getContext(), $message->getSkip()));
     }
 
-    public function iterate($offset): ?EntityIndexingMessage
+    public function iterate(array $offset): ?EntityIndexingMessage
     {
         $iterator = $this->iteratorFactory->createIterator($this->repository->getDefinition(), $offset);
 

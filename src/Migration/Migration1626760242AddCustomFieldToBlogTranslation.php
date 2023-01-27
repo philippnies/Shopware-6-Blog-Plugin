@@ -9,7 +9,7 @@ class Migration1626760242AddCustomFieldToBlogTranslation extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1626760242;
+        return 1_626_760_242;
     }
 
     public function update(Connection $connection): void

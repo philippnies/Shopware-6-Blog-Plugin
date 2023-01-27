@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule;
 
+use DateTime;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Result;
 use Sas\BlogModule\Content\Blog\BlogEntriesDefinition;
@@ -14,7 +15,6 @@ use Shopware\Core\Content\Seo\SeoUrlTemplate\SeoUrlTemplateCollection;
 use Shopware\Core\Content\Seo\SeoUrlTemplate\SeoUrlTemplateEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -30,7 +30,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SasBlogModule extends Plugin
 {
-    public const ANONYMOUS_AUTHOR_ID = '64f4c60194634128b9b85d9299797c45';
+    final public const ANONYMOUS_AUTHOR_ID = '64f4c60194634128b9b85d9299797c45';
 
     public function install(InstallContext $installContext): void
     {
@@ -150,9 +150,7 @@ class SasBlogModule extends Plugin
         $mediaFolderIds = $mediaFolderRepository->searchIds($criteria, $context)->getIds();
 
         if (!empty($mediaFolderIds)) {
-            $ids = array_map(static function ($id) {
-                return ['id' => $id];
-            }, $mediaFolderIds);
+            $ids = array_map(static fn($id) => ['id' => $id], $mediaFolderIds);
             $mediaFolderRepository->delete($ids, $context);
         }
     }
@@ -172,9 +170,7 @@ class SasBlogModule extends Plugin
         $mediaFolderIds = $mediaFolderRepository->searchIds($criteria, $context)->getIds();
 
         if (!empty($mediaFolderIds)) {
-            $ids = array_map(static function ($id) {
-                return ['id' => $id];
-            }, $mediaFolderIds);
+            $ids = array_map(static fn($id) => ['id' => $id], $mediaFolderIds);
             $mediaFolderRepository->delete($ids, $context);
         }
     }
@@ -194,9 +190,7 @@ class SasBlogModule extends Plugin
         $seoUrlTemplateIds = $seoUrlTemplateRepository->searchIds($criteria, $context)->getIds();
 
         if (!empty($seoUrlTemplateIds)) {
-            $ids = array_map(static function ($id) {
-                return ['id' => $id];
-            }, $seoUrlTemplateIds);
+            $ids = array_map(static fn($id) => ['id' => $id], $seoUrlTemplateIds);
             $seoUrlTemplateRepository->delete($ids, $context);
         }
     }
@@ -343,7 +337,7 @@ class SasBlogModule extends Plugin
             return [];
         }
 
-        $now = (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT);
+        $now = (new DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT);
 
         $query = $connection->createQueryBuilder();
         $query->select([

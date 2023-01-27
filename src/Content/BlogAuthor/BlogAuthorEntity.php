@@ -21,13 +21,13 @@ class BlogAuthorEntity extends Entity
 
     protected string $email;
 
-    protected ?string $displayName;
+    protected ?string $displayName = null;
 
     protected string $salutationId;
 
-    protected ?SalutationEntity $salutation;
+    protected ?SalutationEntity $salutation = null;
 
-    protected ?string $description;
+    protected ?string $description = null;
 
     /**
      * @var BlogAuthorTranslationCollection|null

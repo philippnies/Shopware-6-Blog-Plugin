@@ -20,20 +20,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class BlogCacheInvalidSubscriber implements EventSubscriberInterface
 {
-    private SeoUrlUpdater $seoUrlUpdater;
-
-    private EntityRepository $categoryRepository;
-
-    private CacheInvalidator $cacheInvalidator;
-
-    public function __construct(
-        SeoUrlUpdater $seoUrlUpdater,
-        EntityRepository $categoryRepository,
-        CacheInvalidator $cacheInvalidator
-    ) {
-        $this->seoUrlUpdater = $seoUrlUpdater;
-        $this->categoryRepository = $categoryRepository;
-        $this->cacheInvalidator = $cacheInvalidator;
+    public function __construct(private readonly SeoUrlUpdater $seoUrlUpdater, private readonly EntityRepository $categoryRepository, private readonly CacheInvalidator $cacheInvalidator)
+    {
     }
 
     public static function getSubscribedEvents(): array

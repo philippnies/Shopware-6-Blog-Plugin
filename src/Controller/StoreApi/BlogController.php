@@ -2,8 +2,8 @@
 
 namespace Sas\BlogModule\Controller\StoreApi;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use OpenApi\Annotations as OA;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
@@ -15,18 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"store-api"})
+ * @Route(defaults={"_routeScope" = {"store-api"}})
  */
 class BlogController extends AbstractBlogController
 {
-    /**
-     * @var EntityRepositoryInterface
-     */
-    private $blogRepository;
-
-    public function __construct(EntityRepositoryInterface $blogRepository)
+    public function __construct(private readonly EntityRepository $blogRepository)
     {
-        $this->blogRepository = $blogRepository;
     }
 
     public function getDecorated(): AbstractBlogController
@@ -64,8 +58,8 @@ class BlogController extends AbstractBlogController
      *          )
      *     )
      * )
-     * @Route("/store-api/blog", name="store-api.sas.blog.load", methods={"GET","POST"})
      */
+    #[Route(path: '/store-api/blog', name: 'store-api.sas.blog.load', methods: ['GET', 'POST'])]
     public function load(Request $request, Criteria $criteria, SalesChannelContext $context): BlogControllerResponse
     {
         $criteria = $this->buildCriteria($request, $criteria);

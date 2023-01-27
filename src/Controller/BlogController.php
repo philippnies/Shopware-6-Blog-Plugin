@@ -2,13 +2,14 @@
 
 namespace Sas\BlogModule\Controller;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use DateTime;
 use Sas\BlogModule\Content\Blog\BlogEntriesCollection;
 use Sas\BlogModule\Content\Blog\BlogEntriesEntity;
 use Sas\BlogModule\Content\BlogAuthor\BlogAuthorEntity;
 use Sas\BlogModule\Page\Search\BlogSearchPageLoader;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoaderInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
@@ -26,43 +27,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope" = {"storefront"}})
  */
 class BlogController extends StorefrontController
 {
-    private GenericPageLoaderInterface $genericPageLoader;
-
-    private SalesChannelCmsPageLoaderInterface $cmsPageLoader;
-
-    private SystemConfigService $systemConfigService;
-
-    private EntityRepositoryInterface $blogRepository;
-
-    private BlogSearchPageLoader $blogSearchPageLoader;
-
-    public function __construct(
-        SystemConfigService $systemConfigService,
-        GenericPageLoaderInterface $genericPageLoader,
-        SalesChannelCmsPageLoaderInterface $cmsPageLoader,
-        EntityRepositoryInterface $blogRepository,
-        BlogSearchPageLoader $blogSearchPageLoader
-    ) {
-        $this->systemConfigService = $systemConfigService;
-        $this->genericPageLoader = $genericPageLoader;
-        $this->cmsPageLoader = $cmsPageLoader;
-        $this->blogRepository = $blogRepository;
-        $this->blogSearchPageLoader = $blogSearchPageLoader;
+    public function __construct(private readonly SystemConfigService $systemConfigService, private readonly GenericPageLoaderInterface $genericPageLoader, private readonly SalesChannelCmsPageLoaderInterface $cmsPageLoader, private readonly EntityRepository $blogRepository, private readonly BlogSearchPageLoader $blogSearchPageLoader)
+    {
     }
 
     /**
      * @HttpCache()
-     * @Route("/sas_blog/search", name="sas.frontend.blog.search", methods={"GET"})
      */
+    #[Route(path: '/sas_blog/search', name: 'sas.frontend.blog.search', methods: ['GET'])]
     public function search(Request $request, SalesChannelContext $context): Response
     {
         try {
             $page = $this->blogSearchPageLoader->load($request, $context);
-        } catch (MissingRequestParameterException $missingRequestParameterException) {
+        } catch (MissingRequestParameterException) {
             return $this->forwardToRoute('frontend.home.page');
         }
 
@@ -71,10 +52,10 @@ class BlogController extends StorefrontController
 
     /**
      * @HttpCache()
-     * @Route("/widgets/blog-search", name="widgets.blog.search.pagelet", methods={"GET", "POST"}, defaults={"XmlHttpRequest"=true})
      *
      * @throws MissingRequestParameterException
      */
+    #[Route(path: '/widgets/blog-search', name: 'widgets.blog.search.pagelet', methods: ['GET', 'POST'], defaults: ['XmlHttpRequest' => true])]
     public function ajax(Request $request, SalesChannelContext $context): Response
     {
         $request->request->set('no-aggregations', true);
@@ -89,8 +70,8 @@ class BlogController extends StorefrontController
 
     /**
      * @HttpCache()
-     * @Route("/sas_blog/{articleId}", name="sas.frontend.blog.detail", methods={"GET"})
      */
+    #[Route(path: '/sas_blog/{articleId}', name: 'sas.frontend.blog.detail', methods: ['GET'])]
     public function detailAction(string $articleId, Request $request, SalesChannelContext $context): Response
     {
         $page = $this->genericPageLoader->load($request, $context);
@@ -151,13 +132,13 @@ class BlogController extends StorefrontController
 
     /**
      * @HttpCache()
-     * @Route("/blog/rss", name="frontend.sas.blog.rss", methods={"GET"})
      */
+    #[Route(path: '/blog/rss', name: 'frontend.sas.blog.rss', methods: ['GET'])]
     public function rss(Request $request, SalesChannelContext $context): Response
     {
         $criteria = new Criteria();
 
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         $criteria->addAssociations(['blogAuthor.salutation']);
 

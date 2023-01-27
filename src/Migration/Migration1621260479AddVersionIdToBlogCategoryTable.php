@@ -10,7 +10,7 @@ class Migration1621260479AddVersionIdToBlogCategoryTable extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1612160298;
+        return 1_612_160_298;
     }
 
     public function update(Connection $connection): void

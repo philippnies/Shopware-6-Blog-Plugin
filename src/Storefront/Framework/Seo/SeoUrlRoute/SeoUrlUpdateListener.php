@@ -2,11 +2,12 @@
 
 namespace Sas\BlogModule\Storefront\Framework\Seo\SeoUrlRoute;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use DateTime;
 use Sas\BlogModule\Content\Blog\BlogSeoUrlRoute;
 use Sas\BlogModule\Content\Blog\Events\BlogIndexerEvent;
 use Shopware\Core\Content\Seo\SeoUrlUpdater;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -15,19 +16,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SeoUrlUpdateListener implements EventSubscriberInterface
 {
-    private SeoUrlUpdater $seoUrlUpdater;
-
-    private EntityRepositoryInterface $blogRepository;
-
     /**
      * @internal
      */
-    public function __construct(
-        SeoUrlUpdater $seoUrlUpdater,
-        EntityRepositoryInterface $blogRepository
-    ) {
-        $this->seoUrlUpdater = $seoUrlUpdater;
-        $this->blogRepository = $blogRepository;
+    public function __construct(private readonly SeoUrlUpdater $seoUrlUpdater, private readonly EntityRepository $blogRepository)
+    {
     }
 
     public static function getSubscribedEvents(): array
@@ -61,7 +54,7 @@ class SeoUrlUpdateListener implements EventSubscriberInterface
     {
         $criteria = new Criteria();
 
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
         $criteria->addFilter(
             new EqualsFilter('active', true),
             new RangeFilter('publishedAt', [RangeFilter::LTE => $dateTime->format(\DATE_ATOM)])

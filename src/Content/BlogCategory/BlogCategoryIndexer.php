@@ -2,11 +2,11 @@
 
 namespace Sas\BlogModule\Content\BlogCategory;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ForwardCompatibility\Result;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\ChildCountUpdater;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexer;
@@ -16,28 +16,8 @@ use Shopware\Core\Framework\Uuid\Uuid;
 
 class BlogCategoryIndexer extends EntityIndexer
 {
-    private Connection $connection;
-
-    private EntityRepositoryInterface $repository;
-
-    private ChildCountUpdater $childCountUpdater;
-
-    private TreeUpdater $treeUpdater;
-
-    private IteratorFactory $iteratorFactory;
-
-    public function __construct(
-        Connection $connection,
-        IteratorFactory $iteratorFactory,
-        EntityRepositoryInterface $repository,
-        ChildCountUpdater $childCountUpdater,
-        TreeUpdater $treeUpdater
-    ) {
-        $this->repository = $repository;
-        $this->childCountUpdater = $childCountUpdater;
-        $this->treeUpdater = $treeUpdater;
-        $this->connection = $connection;
-        $this->iteratorFactory = $iteratorFactory;
+    public function __construct(private readonly Connection $connection, private readonly IteratorFactory $iteratorFactory, private readonly EntityRepository $repository, private readonly ChildCountUpdater $childCountUpdater, private readonly TreeUpdater $treeUpdater)
+    {
     }
 
     public function getName(): string
@@ -45,7 +25,7 @@ class BlogCategoryIndexer extends EntityIndexer
         return 'sas.blog.category.indexer';
     }
 
-    public function iterate($offset): ?EntityIndexingMessage
+    public function iterate(array $offset): ?EntityIndexingMessage
     {
         $iterator = $this->iteratorFactory->createIterator($this->repository->getDefinition(), $offset);
 

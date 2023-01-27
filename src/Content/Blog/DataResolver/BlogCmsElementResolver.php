@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Content\Blog\DataResolver;
 
+use DateTime;
 use Sas\BlogModule\Content\Blog\BlogEntriesDefinition;
 use Sas\BlogModule\Content\Blog\BlogListingFilterBuildEvent;
 use Sas\BlogModule\Content\Blog\Events\BlogMainFilterEvent;
@@ -22,11 +23,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class BlogCmsElementResolver extends AbstractCmsElementResolver
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getType(): string
@@ -39,7 +37,7 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
         /* get the config from the element */
         $config = $slot->getFieldConfig();
 
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         $criteria = new Criteria();
 

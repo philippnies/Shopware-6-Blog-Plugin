@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Migration;
 
+use DateTime;
 use Doctrine\DBAL\Connection;
 use Sas\BlogModule\Content\Blog\Aggregate\BlogCategoryMappingDefinition;
 use Sas\BlogModule\Content\Blog\BlogEntriesDefinition;
@@ -20,7 +21,7 @@ class Migration1604520733DefaultBlogCategorySeeder extends MigrationStep
 
     public function getCreationTimestamp(): int
     {
-        return 1604520733;
+        return 1_604_520_733;
     }
 
     public function update(Connection $connection): void
@@ -68,7 +69,7 @@ class Migration1604520733DefaultBlogCategorySeeder extends MigrationStep
     {
         $id = Uuid::randomBytes();
 
-        $connection->insert(BlogCategoryDefinition::ENTITY_NAME, ['id' => $id, 'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)]);
+        $connection->insert(BlogCategoryDefinition::ENTITY_NAME, ['id' => $id, 'created_at' => (new DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)]);
 
         return $id;
     }

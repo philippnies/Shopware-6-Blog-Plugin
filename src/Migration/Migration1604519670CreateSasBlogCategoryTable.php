@@ -9,7 +9,7 @@ class Migration1604519670CreateSasBlogCategoryTable extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1604519670;
+        return 1_604_519_670;
     }
 
     public function update(Connection $connection): void

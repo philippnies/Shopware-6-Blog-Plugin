@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Content\Blog\DataResolver;
 
+use DateTime;
 use Sas\BlogModule\Content\Blog\BlogEntriesDefinition;
 use Sas\BlogModule\Content\Blog\Events\NewestListingCriteriaEvent;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
@@ -20,11 +21,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class BlogNewestListingCmsElementResolver extends AbstractCmsElementResolver
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -95,7 +93,7 @@ class BlogNewestListingCmsElementResolver extends AbstractCmsElementResolver
 
         $criteria->addFilter(new EqualsFilter('active', true));
         $criteria->addFilter(new RangeFilter('publishedAt', [
-            RangeFilter::LTE => (new \DateTime())->format(\DATE_ATOM),
+            RangeFilter::LTE => (new DateTime())->format(\DATE_ATOM),
         ]));
 
         $criteria->addSorting(new FieldSorting('publishedAt', FieldSorting::DESCENDING));

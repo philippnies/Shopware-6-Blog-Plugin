@@ -11,10 +11,10 @@ class BlogListingFilterBuildEvent
      *
      * @Event("Sas\BlogModule\Content\Blog\Events\BlogMainFilterEvent")
      */
-    public const BLOG_MAIIN_FILTER_EVENT = BlogMainFilterEvent::class;
+    final public const BLOG_MAIIN_FILTER_EVENT = BlogMainFilterEvent::class;
 
     /**
      * @Event("Sas\BlogModule\Content\Blog\Events\BlogMainFilterEvent")
      */
-    public const BLOG_MAIN_FILTER_EVENT = BlogMainFilterEvent::class;
+    final public const BLOG_MAIN_FILTER_EVENT = BlogMainFilterEvent::class;
 }

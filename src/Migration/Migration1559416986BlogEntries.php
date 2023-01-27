@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Migration;
 
+use DateTime;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Migration\MigrationStep;
@@ -11,7 +12,7 @@ class Migration1559416986BlogEntries extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1559416986;
+        return 1_559_416_986;
     }
 
     public function update(Connection $connection): void
@@ -59,7 +60,7 @@ class Migration1559416986BlogEntries extends MigrationStep
             'routeName' => 'sas.frontend.blog.detail',
             'entityName' => 'sas_blog_entries',
             'template' => 'blog/{{ entry.translated.title|lower }}',
-            'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
+            'createdAt' => (new DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
         ]);
     }
 

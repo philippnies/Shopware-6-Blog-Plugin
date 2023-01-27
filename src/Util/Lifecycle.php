@@ -2,23 +2,15 @@
 
 namespace Sas\BlogModule\Util;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 class Lifecycle
 {
-    private SystemConfigService $systemConfig;
-
-    private EntityRepositoryInterface $cmsPageRepository;
-
-    public function __construct(
-        SystemConfigService $systemConfig,
-        EntityRepositoryInterface $cmsPageRepository
-    ) {
-        $this->systemConfig = $systemConfig;
-        $this->cmsPageRepository = $cmsPageRepository;
+    public function __construct(private readonly SystemConfigService $systemConfig, private readonly EntityRepository $cmsPageRepository)
+    {
     }
 
     public function install(Context $context): void

@@ -9,7 +9,7 @@ class BlogAuthorTranslationEntity extends TranslationEntity
 {
     protected string $sasBlogAuthorId;
 
-    protected ?BlogAuthorEntity $sasBlogAuthor;
+    protected ?BlogAuthorEntity $sasBlogAuthor = null;
 
     protected string $description;
 

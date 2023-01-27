@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Content\Blog\Subscriber;
 
+use DateTime;
 use Sas\BlogModule\Content\Blog\BlogEntriesDefinition;
 use Sas\BlogModule\Content\Blog\BlogListingFilterBuildEvent;
 use Sas\BlogModule\Content\Blog\Events\BlogMainFilterEvent;
@@ -27,7 +28,7 @@ class BlogSubscriber implements EventSubscriberInterface
 
     public function onBlogMainFilter(BlogMainFilterEvent $event): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         $criteria = $event->getCriteria();
         $criteria->addFilter(

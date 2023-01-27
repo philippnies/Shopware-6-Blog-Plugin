@@ -14,7 +14,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class BlogEntriesTranslationDefinition extends EntityTranslationDefinition
 {
-    public const ENTITY_NAME = 'sas_blog_entries_translation';
+    final public const ENTITY_NAME = 'sas_blog_entries_translation';
 
     public function getEntityName(): string
     {

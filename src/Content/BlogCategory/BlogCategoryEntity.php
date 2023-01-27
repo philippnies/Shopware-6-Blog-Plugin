@@ -12,15 +12,15 @@ class BlogCategoryEntity extends Entity
 {
     use EntityIdTrait;
 
-    protected ?string $parentId;
+    protected ?string $parentId = null;
 
-    protected ?string $afterCategoryId;
+    protected ?string $afterCategoryId = null;
 
-    protected ?int $level;
+    protected ?int $level = null;
 
-    protected ?string $path;
+    protected ?string $path = null;
 
-    protected ?int $childCount;
+    protected ?int $childCount = null;
 
     protected string $name;
 

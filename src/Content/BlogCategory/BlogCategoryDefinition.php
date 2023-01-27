@@ -30,7 +30,7 @@ use Shopware\Core\System\SalesChannel\SalesChannelDefinition;
 
 class BlogCategoryDefinition extends EntityDefinition
 {
-    public const ENTITY_NAME = 'sas_blog_category';
+    final public const ENTITY_NAME = 'sas_blog_category';
 
     public function getEntityName(): string
     {

@@ -24,7 +24,7 @@ use Shopware\Core\System\Salutation\SalutationDefinition;
 
 class BlogAuthorDefinition extends EntityDefinition
 {
-    public const ENTITY_NAME = 'sas_blog_author';
+    final public const ENTITY_NAME = 'sas_blog_author';
 
     public function getEntityName(): string
     {

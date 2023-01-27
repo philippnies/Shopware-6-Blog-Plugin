@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Content\Blog;
 
+use DateTimeInterface;
 use Sas\BlogModule\Content\Blog\BlogEntriesTranslation\BlogEntriesTranslationCollection;
 use Sas\BlogModule\Content\BlogAuthor\BlogAuthorEntity;
 use Sas\BlogModule\Content\BlogCategory\BlogCategoryCollection;
@@ -15,17 +16,17 @@ class BlogEntriesEntity extends Entity
     use EntityIdTrait;
     use EntityCustomFieldsTrait;
 
-    protected ?string $title;
+    protected ?string $title = null;
 
-    protected ?string $slug;
+    protected ?string $slug = null;
 
-    protected ?string $teaser;
+    protected ?string $teaser = null;
 
-    protected ?string $metaTitle;
+    protected ?string $metaTitle = null;
 
-    protected ?string $metaDescription;
+    protected ?string $metaDescription = null;
 
-    protected ?string $content;
+    protected ?string $content = null;
 
     protected bool $active;
 
@@ -43,16 +44,16 @@ class BlogEntriesEntity extends Entity
 
     protected string $authorId;
 
-    protected ?BlogAuthorEntity $blogAuthor;
+    protected ?BlogAuthorEntity $blogAuthor = null;
 
     /**
      * @var string
      */
     protected $mediaId;
 
-    protected ?MediaEntity $media;
+    protected ?MediaEntity $media = null;
 
-    protected \DateTimeInterface $publishedAt;
+    protected DateTimeInterface $publishedAt;
 
     public function getTitle(): ?string
     {
@@ -174,12 +175,12 @@ class BlogEntriesEntity extends Entity
         $this->blogCategories = $blogCategories;
     }
 
-    public function getPublishedAt(): \DateTimeInterface
+    public function getPublishedAt(): DateTimeInterface
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeInterface $publishedAt): void
+    public function setPublishedAt(DateTimeInterface $publishedAt): void
     {
         $this->publishedAt = $publishedAt;
     }

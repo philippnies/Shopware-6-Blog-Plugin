@@ -2,10 +2,11 @@
 
 namespace Sas\BlogModule\Content\SalesChannel\Suggest;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use DateTime;
 use Shopware\Core\Content\Product\SalesChannel\Suggest\AbstractProductSuggestRoute;
 use Shopware\Core\Content\Product\SalesChannel\Suggest\ProductSuggestRouteResponse;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
@@ -19,20 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductSuggestDecorated extends AbstractProductSuggestRoute
 {
-    private AbstractProductSuggestRoute $decorated;
-
-    private EntityRepositoryInterface $blogRepository;
-
-    private SystemConfigService $systemConfigService;
-
-    public function __construct(
-        AbstractProductSuggestRoute $decorated,
-        EntityRepositoryInterface $blogRepository,
-        SystemConfigService $systemConfigService
-    ) {
-        $this->decorated = $decorated;
-        $this->blogRepository = $blogRepository;
-        $this->systemConfigService = $systemConfigService;
+    public function __construct(private readonly AbstractProductSuggestRoute $decorated, private readonly EntityRepository $blogRepository, private readonly SystemConfigService $systemConfigService)
+    {
     }
 
     public function getDecorated(): AbstractProductSuggestRoute
@@ -69,7 +58,7 @@ class ProductSuggestDecorated extends AbstractProductSuggestRoute
 
         $criteria->addFilter(
             new EqualsFilter('active', true),
-            new RangeFilter('publishedAt', [RangeFilter::LTE => (new \DateTime())->format(\DATE_ATOM)])
+            new RangeFilter('publishedAt', [RangeFilter::LTE => (new DateTime())->format(\DATE_ATOM)])
         );
 
         if (Feature::isActive('FEATURE_SAS_BLOG_V2')) {

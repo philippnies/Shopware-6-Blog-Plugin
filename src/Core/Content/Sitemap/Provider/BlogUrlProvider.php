@@ -2,6 +2,8 @@
 
 namespace Sas\BlogModule\Core\Content\Sitemap\Provider;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use DateTime;
 use Doctrine\DBAL\Connection;
 use Sas\BlogModule\Content\Blog\BlogEntriesCollection;
 use Sas\BlogModule\Content\Blog\BlogEntriesEntity;
@@ -10,7 +12,6 @@ use Shopware\Core\Content\Sitemap\Provider\AbstractUrlProvider;
 use Shopware\Core\Content\Sitemap\Struct\Url;
 use Shopware\Core\Content\Sitemap\Struct\UrlResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
@@ -20,23 +21,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class BlogUrlProvider extends AbstractUrlProvider
 {
-    public const CHANGE_FREQ = 'daily';
-    public const PRIORITY = 1.0;
+    final public const CHANGE_FREQ = 'daily';
+    final public const PRIORITY = 1.0;
 
-    private EntityRepositoryInterface $blogRepository;
-
-    private Connection $connection;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(
-        EntityRepositoryInterface $blogRepository,
-        Connection $connection,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->blogRepository = $blogRepository;
-        $this->connection = $connection;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private readonly EntityRepository $blogRepository, private readonly Connection $connection, private readonly EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     public function getDecorated(): AbstractUrlProvider
@@ -53,7 +42,7 @@ class BlogUrlProvider extends AbstractUrlProvider
     {
         $criteria = new Criteria();
 
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         $criteria->setLimit($limit);
         $criteria->setOffset($offset);
@@ -91,7 +80,7 @@ class BlogUrlProvider extends AbstractUrlProvider
             }
 
             $blogUrl = new Url();
-            $blogUrl->setLastmod($blogEntity->getUpdatedAt() ?? new \DateTime());
+            $blogUrl->setLastmod($blogEntity->getUpdatedAt() ?? new DateTime());
             $blogUrl->setChangefreq(self::CHANGE_FREQ);
             $blogUrl->setPriority(self::PRIORITY);
             $blogUrl->setResource(BlogEntriesEntity::class);

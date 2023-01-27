@@ -14,7 +14,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\MappingEntityDefinition;
 
 class BlogCategoryMappingDefinition extends MappingEntityDefinition
 {
-    public const ENTITY_NAME = 'sas_blog_blog_category';
+    final public const ENTITY_NAME = 'sas_blog_blog_category';
 
     public function getEntityName(): string
     {

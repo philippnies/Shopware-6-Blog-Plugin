@@ -22,9 +22,9 @@ class BlogEntriesTranslationEntity extends TranslationEntity
 
     protected string $teaser;
 
-    protected ?string $metaTitle;
+    protected ?string $metaTitle = null;
 
-    protected ?string $metaDescription;
+    protected ?string $metaDescription = null;
 
     public function getSasBlogEntriesId(): string
     {

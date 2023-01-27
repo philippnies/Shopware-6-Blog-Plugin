@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Content\Blog;
 
+use DateTime;
 use Sas\BlogModule\Content\Blog\Aggregate\BlogCategoryMappingDefinition;
 use Sas\BlogModule\Content\Blog\BlogEntriesTranslation\BlogEntriesTranslationDefinition;
 use Sas\BlogModule\Content\BlogAuthor\BlogAuthorDefinition;
@@ -26,7 +27,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class BlogEntriesDefinition extends EntityDefinition
 {
-    public const ENTITY_NAME = 'sas_blog_entries';
+    final public const ENTITY_NAME = 'sas_blog_entries';
 
     public function getEntityName(): string
     {
@@ -45,7 +46,7 @@ class BlogEntriesDefinition extends EntityDefinition
 
     public function getDefaults(): array
     {
-        return ['publishedAt' => new \DateTime()];
+        return ['publishedAt' => new DateTime()];
     }
 
     protected function defineFields(): FieldCollection

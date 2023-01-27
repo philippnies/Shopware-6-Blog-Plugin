@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Migration;
 
+use DateTime;
 use Doctrine\DBAL\Connection;
 use Sas\BlogModule\SasBlogModule;
 use Shopware\Core\Defaults;
@@ -12,7 +13,7 @@ class Migration1605031477CreateSasBlogAuthorTable extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1605031477;
+        return 1_605_031_477;
     }
 
     public function update(Connection $connection): void
@@ -69,7 +70,7 @@ class Migration1605031477CreateSasBlogAuthorTable extends MigrationStep
                 'salutation_id' => $notSpecified,
                 'display_name' => 'Anonymous',
                 'email' => 'N/A',
-                'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
+                'created_at' => (new DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
             ]);
         }
 

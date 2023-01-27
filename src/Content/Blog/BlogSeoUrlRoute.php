@@ -2,6 +2,7 @@
 
 namespace Sas\BlogModule\Content\Blog;
 
+use InvalidArgumentException;
 use Shopware\Core\Content\Seo\SeoUrlRoute\SeoUrlMapping;
 use Shopware\Core\Content\Seo\SeoUrlRoute\SeoUrlRouteConfig;
 use Shopware\Core\Content\Seo\SeoUrlRoute\SeoUrlRouteInterface;
@@ -11,16 +12,10 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
 class BlogSeoUrlRoute implements SeoUrlRouteInterface
 {
-    public const ROUTE_NAME = 'sas.frontend.blog.detail';
+    final public const ROUTE_NAME = 'sas.frontend.blog.detail';
 
-    /**
-     * @var BlogEntriesDefinition
-     */
-    private $definition;
-
-    public function __construct(BlogEntriesDefinition $definition)
+    public function __construct(private readonly BlogEntriesDefinition $definition)
     {
-        $this->definition = $definition;
     }
 
     public function getConfig(): SeoUrlRouteConfig
@@ -43,7 +38,7 @@ class BlogSeoUrlRoute implements SeoUrlRouteInterface
     public function getMapping(Entity $entry, ?SalesChannelEntity $salesChannel): SeoUrlMapping
     {
         if (!$entry instanceof BlogEntriesEntity) {
-            throw new \InvalidArgumentException('Expected BlogEntriesEntity');
+            throw new InvalidArgumentException('Expected BlogEntriesEntity');
         }
 
         return new SeoUrlMapping(
